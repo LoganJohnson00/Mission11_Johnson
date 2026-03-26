@@ -5,6 +5,8 @@ import type { CartItem } from '../types/CartItem';
 function CartPage() {
   const navigate = useNavigate();
   const { cart, removeFromCart } = useCart();
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
   return (
     <div>
       <h2>Your Cart</h2>
@@ -15,7 +17,8 @@ function CartPage() {
           <ul>
             {cart.map((item: CartItem) => (
               <li key={item.bookId}>
-                {item.title}: ${item.donationAmount.toFixed(2)}
+                {item.title} — Qty: {item.quantity} x ${item.price.toFixed(2)} =
+                ${(item.price * item.quantity).toFixed(2)}
                 <button onClick={() => removeFromCart(item.bookId)}>
                   Remove
                 </button>
@@ -24,9 +27,9 @@ function CartPage() {
           </ul>
         )}
       </div>
-      <h3>Total: </h3>
+      <h3>Total: ${total.toFixed(2)}</h3>
       <button>Checkout</button>
-      <button onClick={() => navigate('/projects')}>Continue Browsing</button>
+      <button onClick={() => navigate('/books')}>Continue Shopping</button>
     </div>
   );
 }

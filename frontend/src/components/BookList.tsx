@@ -9,6 +9,7 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [totalPages, setTotalPages] = useState<number>(0);
   const [sortOrder, setSortOrder] = useState<string>('');
   const navigate = useNavigate();
+  const [openBookId, setOpenBookId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -54,43 +55,60 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
         </button>
       </div>
 
-      {books.map((b) => (
-        <div className="card shadow-sm mb-3" key={b.bookId}>
-          <div className="card-body">
-            <h5 className="card-title">{b.title}</h5>
-            <ul className="list-unstyled mb-0">
-              <li>
-                <strong>Author:</strong> {b.author}
-              </li>
-              <li>
-                <strong>Publisher:</strong> {b.publisher}
-              </li>
-              <li>
-                <strong>ISBN:</strong> {b.isbn}
-              </li>
-              <li>
-                <strong>Classification:</strong> {b.classification}
-              </li>
-              <li>
-                <strong>Category:</strong> {b.category}
-              </li>
-              <li>
-                <strong>Page Count:</strong> {b.pageCount}
-              </li>
-              <li>
-                <strong>Price:</strong> ${b.price.toFixed(2)}
-              </li>
-            </ul>
-            <button
-              className="btn btn-success"
-              onClick={() => navigate(`/donate/${b.title}/${b.bookId}`)}
+      <div className="accordion" id="bookAccordion">
+        {books.map((b) => (
+          <div className="accordion-item" key={b.bookId}>
+            <h2 className="accordion-header">
+              <button
+                className={`accordion-button ${openBookId === b.bookId ? '' : 'collapsed'}`}
+                type="button"
+                onClick={() =>
+                  setOpenBookId(openBookId === b.bookId ? null : b.bookId)
+                }
+              >
+                {b.title} — ${b.price.toFixed(2)}
+              </button>
+            </h2>
+            <div
+              className={`accordion-collapse collapse ${openBookId === b.bookId ? 'show' : ''}`}
             >
-              Purchase
-            </button>
+              <div className="accordion-body">
+                <ul className="list-unstyled mb-2">
+                  <li>
+                    <strong>Author:</strong> {b.author}
+                  </li>
+                  <li>
+                    <strong>Publisher:</strong> {b.publisher}
+                  </li>
+                  <li>
+                    <strong>ISBN:</strong> {b.isbn}
+                  </li>
+                  <li>
+                    <strong>Classification:</strong> {b.classification}
+                  </li>
+                  <li>
+                    <strong>Category:</strong> {b.category}
+                  </li>
+                  <li>
+                    <strong>Page Count:</strong> {b.pageCount}
+                  </li>
+                  <li>
+                    <strong>Price:</strong> ${b.price.toFixed(2)}
+                  </li>
+                </ul>
+                <button
+                  className="btn btn-success"
+                  onClick={() =>
+                    navigate(`/purchase/${b.title}/${b.bookId}/${b.price}`)
+                  }
+                >
+                  Purchase
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
-
+        ))}
+      </div>
       <div className="d-flex justify-content-center align-items-center gap-2 my-3">
         <button
           className="btn btn-outline-primary btn-sm"
