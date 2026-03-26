@@ -18,14 +18,22 @@ namespace Bookstore.API.Controllers
         }
 
         [HttpGet("AllBooks")]
-        public IActionResult GetBooks(int pageSize, int pageNum)
+        public IActionResult GetBooks(int pageSize, int pageNum,[FromQuery] List<string>? categories = null)
         {
-            var something = _bookstoreContext.Books
+            var query = _bookstoreContext.Books.AsQueryable();
+
+            if (categories != null && categories.Any())
+            {
+                query = query.Where(p => categories.Contains(p.Category));
+            }
+
+            var totalNumBooks = query.Count();
+
+            var something = query
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
             
-            var totalNumBooks = _bookstoreContext.Books.Count();
         
             var someObject = new
             {
@@ -34,6 +42,17 @@ namespace Bookstore.API.Controllers
             };
                 
             return Ok(someObject);
+        }
+
+        [HttpGet("GetCategories")]
+        public IActionResult GetCategories()
+        {
+            var categories = _bookstoreContext.Books
+                .Select(b => b.Category)
+                .Distinct()
+                .ToList();
+            
+            return Ok(categories);
         }
 
     }

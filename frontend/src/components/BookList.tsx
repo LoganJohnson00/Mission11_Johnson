@@ -1,20 +1,25 @@
 import { useEffect, useState } from 'react';
-import type { Book } from './types/Book';
+import type { Book } from '../types/Book';
+import { useNavigate } from 'react-router-dom';
 
-function BookList() {
+function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [books, setBooks] = useState<Book[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
   const [pageNum, setPageNum] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [sortOrder, setSortOrder] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBooks = async () => {
+      const categoryParams = selectedCategories
+        .map((cat) => `categories=${encodeURIComponent(cat)}`)
+        .join('&');
+
       const response = await fetch(
-        `http://localhost:5000/bookstore/allbooks?pageSize=${pageSize}&pageNum=${pageNum}`
+        `http://localhost:5000/bookstore/allbooks?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length ? `&${categoryParams}` : ''}`
       );
       const data = await response.json();
-
       let sortedBooks = data.books;
       if (sortOrder === 'asc') {
         sortedBooks = [...data.books].sort((a: Book, b: Book) =>
@@ -31,12 +36,11 @@ function BookList() {
     };
 
     fetchBooks();
-  }, [pageSize, pageNum, sortOrder]);
+  }, [pageSize, pageNum, sortOrder, selectedCategories]);
 
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1 className="mb-0">Bookstore</h1>
         <button
           className={`btn btn-sm ${sortOrder ? 'btn-primary' : 'btn-outline-primary'}`}
           onClick={() => {
@@ -77,6 +81,12 @@ function BookList() {
                 <strong>Price:</strong> ${b.price.toFixed(2)}
               </li>
             </ul>
+            <button
+              className="btn btn-success"
+              onClick={() => navigate(`/donate/${b.title}/${b.bookId}`)}
+            >
+              Purchase
+            </button>
           </div>
         </div>
       ))}
