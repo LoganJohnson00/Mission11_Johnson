@@ -69,3 +69,10 @@
 /Users/loganjohnson/Desktop/Winter_26_BYU/IS_413/IS413ProjectsVSCode/Mission_11/Mission11Assignment_Johnson/backend/Bookstore.API/bin/Debug/net8.0/runtimes/win-x64/native/e_sqlite3.dll
 /Users/loganjohnson/Desktop/Winter_26_BYU/IS_413/IS413ProjectsVSCode/Mission_11/Mission11Assignment_Johnson/backend/Bookstore.API/bin/Debug/net8.0/runtimes/win-x86/native/e_sqlite3.dll
 /Users/loganjohnson/Desktop/Winter_26_BYU/IS_413/IS413ProjectsVSCode/Mission_11/Mission11Assignment_Johnson/backend/Bookstore.API/obj/Debug/net8.0/Bookstore.API.sourcelink.json
+/Users/loganjohnson/Desktop/Winter_26_BYU/IS_413/IS413ProjectsVSCode/Mission_11/Mission11Assignment_Johnson/backend/Bookstore.API/bin/Debug/net8.0/Bookstore.sqlite
+/Users/loganjohnson/Desktop/Winter_26_BYU/IS_413/IS413ProjectsVSCode/Mission_11/Mission11Assignment_Johnson/backend/Bookstore.API/bin/Debug/net8.0/publish/web.config
+/Users/loganjohnson/Desktop/Winter_26_BYU/IS_413/IS413ProjectsVSCode/Mission_11/Mission11Assignment_Johnson/backend/Bookstore.API/bin/Debug/net8.0/publish/appsettings.Development.json
+/Users/loganjohnson/Desktop/Winter_26_BYU/IS_413/IS413ProjectsVSCode/Mission_11/Mission11Assignment_Johnson/backend/Bookstore.API/bin/Debug/net8.0/publish/appsettings.json
+/Users/loganjohnson/Desktop/Winter_26_BYU/IS_413/IS413ProjectsVSCode/Mission_11/Mission11Assignment_Johnson/backend/Bookstore.API/bin/Debug/net8.0/publish/Bookstore.API.deps.json
+/Users/loganjohnson/Desktop/Winter_26_BYU/IS_413/IS413ProjectsVSCode/Mission_11/Mission11Assignment_Johnson/backend/Bookstore.API/bin/Debug/net8.0/publish/Bookstore.API.runtimeconfig.json
+/Users/loganjohnson/Desktop/Winter_26_BYU/IS_413/IS413ProjectsVSCode/Mission_11/Mission11Assignment_Johnson/backend/Bookstore.API/bin/Debug/net8.0/publish/Bookstore.API.staticwebassets.endpoints.json

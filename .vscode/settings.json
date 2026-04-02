@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/d28700c8-ff9f-492d-9b04-9f4f2e1091d7/resourceGroups/appsvc_windows_mexicocentral/providers/Microsoft.Web/sites/Bookstore-Johnson-Backend",
+  "appService.deploySubpath": "backend/Bookstore.API/publish"
+}
