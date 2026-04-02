@@ -1,5 +1,6 @@
 import './App.css';
 import { CartProvider } from './context/CartContext';
+import AdminBooksPage from './pages/AdminBooksPage';
 import BooksPage from './pages/BooksPage';
 import CartPage from './pages/CartPage';
 import PurchasePage from './pages/PurchasePage';
@@ -18,6 +19,7 @@ function App() {
               element={<PurchasePage />}
             />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/adminbooks" element={<AdminBooksPage />} />
           </Routes>
         </Router>
       </CartProvider>
