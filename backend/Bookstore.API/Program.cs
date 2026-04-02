@@ -31,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(x => x.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader());
+app.UseCors(x => x.WithOrigins("http://localhost:3000", "https://agreeable-meadow-08743570f.1.azurestaticapps.net").AllowAnyMethod().AllowAnyHeader());
 
 // app.UseHttpsRedirection(); // Commented out due to warnings. I think it will default to http now.
 
