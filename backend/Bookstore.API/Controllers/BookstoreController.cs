@@ -12,6 +12,7 @@ namespace Bookstore.API.Controllers
         
         public BookstoreController(BookstoreDbContext temp) => _bookstoreContext = temp;
 
+        [HttpGet]
         public IEnumerable<Book> GetBooks()
         {
             return _bookstoreContext.Books.ToList();

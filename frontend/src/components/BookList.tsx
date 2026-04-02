@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Book } from '../types/Book';
 import { useNavigate } from 'react-router-dom';
+import { fetchBooks } from '../api/BooksAPI';
 
 function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [books, setBooks] = useState<Book[]>([]);
@@ -10,34 +11,40 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [sortOrder, setSortOrder] = useState<string>('');
   const navigate = useNavigate();
   const [openBookId, setOpenBookId] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      const categoryParams = selectedCategories
-        .map((cat) => `categories=${encodeURIComponent(cat)}`)
-        .join('&');
+    const loadBooks = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchBooks(pageSize, pageNum, selectedCategories);
 
-      const response = await fetch(
-        `http://localhost:5000/bookstore/allbooks?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length ? `&${categoryParams}` : ''}`
-      );
-      const data = await response.json();
-      let sortedBooks = data.books;
-      if (sortOrder === 'asc') {
-        sortedBooks = [...data.books].sort((a: Book, b: Book) =>
-          a.title.localeCompare(b.title)
-        );
-      } else if (sortOrder === 'desc') {
-        sortedBooks = [...data.books].sort((a: Book, b: Book) =>
-          b.title.localeCompare(a.title)
-        );
+        let sortedBooks = data.books;
+        if (sortOrder === 'asc') {
+          sortedBooks = [...data.books].sort((a: Book, b: Book) =>
+            a.title.localeCompare(b.title)
+          );
+        } else if (sortOrder === 'desc') {
+          sortedBooks = [...data.books].sort((a: Book, b: Book) =>
+            b.title.localeCompare(a.title)
+          );
+        }
+
+        setBooks(sortedBooks);
+        setTotalPages(Math.ceil(data.totalNumBooks / pageSize));
+      } catch (error) {
+        setError((error as Error).message);
+      } finally {
+        setLoading(false);
       }
-
-      setBooks(sortedBooks);
-      setTotalPages(Math.ceil(data.totalNumBooks / pageSize));
     };
 
-    fetchBooks();
+    loadBooks();
   }, [pageSize, pageNum, sortOrder, selectedCategories]);
+
+  if (loading) return <p>Loading Projects...</p>;
+  if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
     <div className="container mt-4">
